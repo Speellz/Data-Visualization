@@ -1,0 +1,65 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from tkinter import *
+from tkinter import ttk
+
+# Örnek
+data = {
+    'Month': ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    'Revenue': [15000, 18000, 17000, 16000, 21000, 22000, 19000, 23000, 20000, 25000, 24000, 26000],
+    'Expenses': [5000, 6000, 5500, 7000, 7500, 8000, 6500, 8500, 7000, 9000, 8500, 9000]
+}
+df = pd.DataFrame(data)
+df['Profit'] = df['Revenue'] - df['Expenses']
+
+def show_graph(graph_type):
+    plt.figure(figsize=(10, 6))
+    if graph_type == "Revenue":
+        sns.lineplot(x='Month', y='Revenue', data=df, marker='o')
+        plt.title('Monthly Revenue')
+        plt.xlabel('Month')
+        plt.ylabel('Revenue')
+    elif graph_type == "Expenses":
+        sns.lineplot(x='Month', y='Expenses', data=df, marker='o', color='r')
+        plt.title('Monthly Expenses')
+        plt.xlabel('Month')
+        plt.ylabel('Expenses')
+    elif graph_type == "Profit":
+        sns.lineplot(x='Month', y='Profit', data=df, marker='o', color='g')
+        plt.title('Monthly Profit')
+        plt.xlabel('Month')
+        plt.ylabel('Profit')
+    elif graph_type == "Overview":
+        sns.lineplot(x='Month', y='Revenue', data=df, marker='o', label='Revenue')
+        sns.lineplot(x='Month', y='Expenses', data=df, marker='o', color='r', label='Expenses')
+        sns.lineplot(x='Month', y='Profit', data=df, marker='o', color='g', label='Profit')
+        plt.title('Monthly Financial Overview')
+        plt.xlabel('Month')
+        plt.ylabel('Amount')
+        plt.legend()
+    elif graph_type == "Correlation":
+        correlation_matrix = df[['Revenue', 'Expenses', 'Profit']].corr()
+        sns.heatmap(correlation_matrix, annot=True, cmap="coolwarm")
+        plt.title("Correlation Matrix")
+    
+    plt.xticks(rotation=45)
+    plt.show()
+
+# Tkinter
+root = Tk()
+root.title("Financial Data Analysis")
+
+mainframe = ttk.Frame(root, padding="10 10 10 10")
+mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
+
+ttk.Button(mainframe, text="Revenue", command=lambda: show_graph("Revenue")).grid(column=1, row=1, sticky=(W, E))
+ttk.Button(mainframe, text="Expenses", command=lambda: show_graph("Expenses")).grid(column=2, row=1, sticky=(W, E))
+ttk.Button(mainframe, text="Profit", command=lambda: show_graph("Profit")).grid(column=3, row=1, sticky=(W, E))
+ttk.Button(mainframe, text="Overview", command=lambda: show_graph("Overview")).grid(column=4, row=1, sticky=(W, E))
+ttk.Button(mainframe, text="Correlation", command=lambda: show_graph("Correlation")).grid(column=5, row=1, sticky=(W, E))
+
+for child in mainframe.winfo_children(): 
+    child.grid_configure(padx=5, pady=5)
+
+root.mainloop()
