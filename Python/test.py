@@ -2,7 +2,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-# Örnek mali veri seti oluşturun
+#örnek set
 data = {
     'Month': ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
     'Revenue': [15000, 18000, 17000, 16000, 21000, 22000, 19000, 23000, 20000, 25000, 24000, 26000],
@@ -11,15 +11,11 @@ data = {
 df = pd.DataFrame(data)
 df['Profit'] = df['Revenue'] - df['Expenses']
 
-# Veri kümesini görüntüleyin
 print(df)
 
-# Temel istatistikleri hesaplayın
 print(df.describe())
 
-# Veri görselleştirme
-
-# Aylık gelir grafiği
+#aylık gelir
 plt.figure(figsize=(10, 6))
 sns.lineplot(x='Month', y='Revenue', data=df, marker='o')
 plt.title('Monthly Revenue')
@@ -28,7 +24,7 @@ plt.ylabel('Revenue')
 plt.xticks(rotation=45)
 plt.show()
 
-# Aylık gider grafiği
+#aylık gider
 plt.figure(figsize=(10, 6))
 sns.lineplot(x='Month', y='Expenses', data=df, marker='o', color='r')
 plt.title('Monthly Expenses')
@@ -37,7 +33,7 @@ plt.ylabel('Expenses')
 plt.xticks(rotation=45)
 plt.show()
 
-# Aylık kar grafiği
+#aylık kar
 plt.figure(figsize=(10, 6))
 sns.lineplot(x='Month', y='Profit', data=df, marker='o', color='g')
 plt.title('Monthly Profit')
@@ -46,7 +42,7 @@ plt.ylabel('Profit')
 plt.xticks(rotation=45)
 plt.show()
 
-# Gelir, gider ve karın birlikte gösterildiği grafik
+#hepsi
 plt.figure(figsize=(10, 6))
 sns.lineplot(x='Month', y='Revenue', data=df, marker='o', label='Revenue')
 sns.lineplot(x='Month', y='Expenses', data=df, marker='o', color='r', label='Expenses')
@@ -58,7 +54,7 @@ plt.xticks(rotation=45)
 plt.legend()
 plt.show()
 
-# Korelasyon matrisi ve ısı haritası
+#matris ve ısı haritası
 correlation_matrix = df[['Revenue', 'Expenses', 'Profit']].corr()
 plt.figure(figsize=(8, 6))
 sns.heatmap(correlation_matrix, annot=True, cmap="coolwarm")
